@@ -51,6 +51,7 @@ services:
 
 networks:
   webdev:
+    name: webdev
     driver: bridge
 
 
