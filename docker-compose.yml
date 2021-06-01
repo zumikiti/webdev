@@ -1,0 +1,63 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:5.7
+    ports:
+      - '${DB_PORT:-3306}:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+      - 'webdev-mysql:/var/lib/mysql'
+    networks:
+      - webdev
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
+
+
+  redis:
+    image: 'redis:alpine'
+    ports:
+      - '${REDIS_PORT:-6379}:6379'
+    volumes:
+      - 'webdev-redis:/data'
+    networks:
+      - webdev
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+
+
+  meilisearch:
+    image: 'getmeili/meilisearch:latest'
+    ports:
+      - '${MEILISEARCH_PORT:-7700}:7700'
+    volumes:
+      - 'webdev-meilisearch:/data.ms'
+    networks:
+      - webdev
+
+
+  mailhog:
+    image: 'mailhog/mailhog:latest'
+    ports:
+      - '${MAILHOG_PORT:-1025}:1025'
+      - '${MAILHOG_DASHBOARD_PORT:-8025}:8025'
+    networks:
+      - webdev
+
+
+networks:
+  webdev:
+    driver: bridge
+
+
+volumes:
+  webdev-mysql:
+    driver: local
+  webdev-redis:
+    driver: local
+  webdev-meilisearch:
+    driver: local
