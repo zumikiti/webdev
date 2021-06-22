@@ -18,7 +18,6 @@ A set of commonly used services in web development all bundled in a `docker-comp
 ```bash
 $ git clone https://github.com/adwinying/webdev
 $ cd webdev
-$ copy .env.example .env
 
 # $ docker compose up -d [list services to start up] eg.
 $ docker compose up -d mysql mailhog
