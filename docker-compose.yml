@@ -3,7 +3,7 @@ services:
   mysql:
     image: mysql:5.7
     ports:
-      - '${DB_PORT:-3306}:3306'
+      - '${MYSQL_PORT:-3306}:3306'
     environment:
       MYSQL_ROOT_PASSWORD: '${DB_PASSWORD:-password}'
       MYSQL_DATABASE: '${DB_DATABASE:-db}'
@@ -16,6 +16,23 @@ services:
       - webdev
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD:-password}"]
+      retries: 3
+      timeout: 5s
+
+
+  pgsql:
+    image: postgres:13
+    ports:
+      - '${PGSQL_PORT:-5432}:5432'
+    environment:
+      PGPASSWORD: '${DB_PASSWORD:-secret}'
+      POSTGRES_DB: '${DB_DATABASE:-db}'
+      POSTGRES_USER: '${DB_USERNAME:-sail}'
+      POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
+      volumes:
+        - 'sailpostgresql:/var/lib/postgresql/data'
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}"]
       retries: 3
       timeout: 5s
 
