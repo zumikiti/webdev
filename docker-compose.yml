@@ -25,10 +25,10 @@ services:
     ports:
       - '${PGSQL_PORT:-5432}:5432'
     environment:
-      PGPASSWORD: '${DB_PASSWORD:-secret}'
+      PGPASSWORD: '${DB_PASSWORD:-password}'
       POSTGRES_DB: '${DB_DATABASE:-db}'
       POSTGRES_USER: '${DB_USERNAME:-sail}'
-      POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
+      POSTGRES_PASSWORD: '${DB_PASSWORD:-password}'
     volumes:
       - 'webdev-pgsql:/var/lib/postgresql/data'
     healthcheck:
