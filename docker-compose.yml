@@ -31,6 +31,8 @@ services:
       POSTGRES_PASSWORD: '${DB_PASSWORD:-password}'
     volumes:
       - 'webdev-pgsql:/var/lib/postgresql/data'
+    networks:
+      - webdev
     healthcheck:
       test: ["CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}"]
       retries: 3
