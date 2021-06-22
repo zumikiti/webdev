@@ -29,8 +29,8 @@ services:
       POSTGRES_DB: '${DB_DATABASE:-db}'
       POSTGRES_USER: '${DB_USERNAME:-sail}'
       POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
-      volumes:
-        - 'sailpostgresql:/var/lib/postgresql/data'
+    volumes:
+      - 'webdev-pgsql:/var/lib/postgresql/data'
     healthcheck:
       test: ["CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}"]
       retries: 3
@@ -78,6 +78,8 @@ networks:
 
 volumes:
   webdev-mysql:
+    driver: local
+  webdev-pgsql:
     driver: local
   webdev-redis:
     driver: local
