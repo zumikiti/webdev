@@ -72,6 +72,18 @@ services:
       - webdev
 
 
+  proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - "127.0.0.1:80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    restart: always
+    privileged: true
+    networks:
+      - webdev
+
 networks:
   webdev:
     name: webdev
