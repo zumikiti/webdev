@@ -67,6 +67,7 @@ services:
 
 
   mailhog:
+    platform: linux/amd64 # M1チップ対応のため追記
     image: 'mailhog/mailhog:latest'
     ports:
       - '${MAILHOG_PORT:-1025}:1025'
