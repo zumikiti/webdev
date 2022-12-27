@@ -31,6 +31,8 @@ services:
       POSTGRES_DB: '${DB_DATABASE:-db}'
       POSTGRES_USER: '${DB_USERNAME:-sail}'
       POSTGRES_PASSWORD: '${DB_PASSWORD:-password}'
+      TZ: 'Asia/Tokyo'
+      PGTZ: 'Asia/Tokyo'
     volumes:
       - 'webdev-pgsql:/var/lib/postgresql/data'
       - './dump:/tmp/dump'
