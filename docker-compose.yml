@@ -90,6 +90,20 @@ services:
     networks:
       - webdev
 
+
+  pgweb:
+    image: sosedoff/pgweb
+    container_name: pgweb
+    ports: 
+      - '${PGWEB_PORT:-8081}:8081'
+    environment:
+      DATABASE_URL: 'postgres://sail:password@pgsql:5432/db?sslmode=disable'
+      VIRTUAL_HOST: 'pgweb.local'
+    restart: always
+    networks:
+      - webdev
+
+ 
 networks:
   webdev:
     name: webdev
